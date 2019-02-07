@@ -7,11 +7,13 @@ import (
 )
 
 func BootstrapIngredientRoutes() {
-	Router.HandleFunc("/ingredients", controllers.GetIngredients).Methods("GET")
-	Router.HandleFunc("/ingredients/{d}", controllers.GetIngredient).Methods("GET")
-	Router.HandleFunc("/ingredients", controllers.CreateIngredient).Methods("POST")
-	Router.HandleFunc("/ingredients/{id}", controllers.DeleteIngredient).Methods("DELETE")
-	Router.HandleFunc("/ingredients/{id}", controllers.UpdateIngredient).Methods("PUT")
+	s := Router.PathPrefix("/api/v1/").Subrouter()
+
+	s.HandleFunc("/ingredients", controllers.GetIngredients).Methods("GET")
+	s.HandleFunc("/ingredients/{d}", controllers.GetIngredient).Methods("GET")
+	s.HandleFunc("/ingredients", controllers.CreateIngredient).Methods("POST")
+	s.HandleFunc("/ingredients/{id}", controllers.DeleteIngredient).Methods("DELETE")
+	s.HandleFunc("/ingredients/{id}", controllers.UpdateIngredient).Methods("PUT")
 
 	log.Println("Ingredient routes bootstrapped")
 }

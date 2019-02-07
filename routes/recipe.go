@@ -7,11 +7,13 @@ import (
 )
 
 func BootstrapRecipeRoutes() {
-	Router.HandleFunc("/recipes", controllers.GetRecipes).Methods("GET")
-	Router.HandleFunc("/recipes/{d}", controllers.GetRecipe).Methods("GET")
-	Router.HandleFunc("/recipes", controllers.CreateRecipe).Methods("POST")
-	Router.HandleFunc("/recipes/{id}", controllers.DeleteRecipe).Methods("DELETE")
-	Router.HandleFunc("/recipes/{id}", controllers.UpdateRecipe).Methods("PUT")
+	s := Router.PathPrefix("/api/v1/").Subrouter()
+
+	s.HandleFunc("/recipes", controllers.GetRecipes).Methods("GET")
+	s.HandleFunc("/recipes/{d}", controllers.GetRecipe).Methods("GET")
+	s.HandleFunc("/recipes", controllers.CreateRecipe).Methods("POST")
+	s.HandleFunc("/recipes/{id}", controllers.DeleteRecipe).Methods("DELETE")
+	s.HandleFunc("/recipes/{id}", controllers.UpdateRecipe).Methods("PUT")
 
 	log.Println("Recipe routes bootstrapped")
 }

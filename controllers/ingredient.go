@@ -1,8 +1,13 @@
 package controllers
 
-import "net/http"
+import (
+	"io"
+	"net/http"
+)
 
-func GetIngredients(w http.ResponseWriter, r *http.Request)   {}
+func GetIngredients(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w, "GET INGREDIENTS")
+}
 func GetIngredient(w http.ResponseWriter, r *http.Request)    {}
 func CreateIngredient(w http.ResponseWriter, r *http.Request) {}
 func DeleteIngredient(w http.ResponseWriter, r *http.Request) {}

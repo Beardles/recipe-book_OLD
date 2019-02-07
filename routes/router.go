@@ -15,7 +15,6 @@ func Bootstrap() {
 	Router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, "Hello, World!")
 	})
-	Router.PathPrefix("/api/v1")
 	BootstrapRecipeRoutes()
 	BootstrapIngredientRoutes()
 	BootstrapNoteRoutes()
