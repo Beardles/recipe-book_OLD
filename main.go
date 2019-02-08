@@ -8,8 +8,11 @@ import (
 )
 
 func main() {
+	db.Open()
 	db.Bootstrap()
 	routes.Bootstrap()
+
+	defer db.Close()
 
 	log.Fatal(http.ListenAndServe(":5000", routes.Router))
 }
