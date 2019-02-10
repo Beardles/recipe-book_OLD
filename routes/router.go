@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"io"
 	"log"
 	"net/http"
 
@@ -11,13 +10,13 @@ import (
 // Router -> Exported mux router
 var Router = mux.NewRouter()
 
+// Bootstrap -> Func to bootrasp all routes
 func Bootstrap() {
-	Router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		io.WriteString(w, "Hello, World!")
-	})
 	BootstrapRecipeRoutes()
 	BootstrapIngredientRoutes()
 	BootstrapNoteRoutes()
 	BootstrapStepRoutes()
+	Router.PathPrefix("/static").Handler(http.FileServer(http.Dir("./client/build")))
+	Router.Handle("/", http.FileServer(http.Dir("./client/build")))
 	log.Println("Routes bootstrapped!")
 }

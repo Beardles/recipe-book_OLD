@@ -3,8 +3,11 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 	"recipe-book/db"
 	"recipe-book/routes"
+
+	"github.com/gorilla/handlers"
 )
 
 func main() {
@@ -14,5 +17,5 @@ func main() {
 
 	defer db.Close()
 
-	log.Fatal(http.ListenAndServe(":5000", routes.Router))
+	log.Fatal(http.ListenAndServe(":5000", handlers.LoggingHandler(os.Stdout, routes.Router)))
 }
