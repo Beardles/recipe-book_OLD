@@ -1,28 +1,41 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Grommet, Grid, Box } from 'grommet';
+import { grommet } from 'grommet/themes';
+import { routes, IRouteConfig } from './routes';
+import Sidebar from './components/Sidebar/Sidebar';
+import { ContentWrapper } from './app.styles';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+const App: React.FC = () => (
+  <Router>
+    <Grommet full theme={grommet}>
+      <Grid
+        fill
+        rows={['auto', 'flex']}
+        columns={['auto', 'flex']}
+        areas={[
+          { name: 'sidebar', start: [0, 1], end: [0, 1] },
+          { name: 'main', start: [1, 1], end: [1, 1] },
+        ]}
+      >
+        <Box gridArea="sidebar" width="small">
+          <Sidebar />
+        </Box>
+        <Box gridArea="main">
+          <ContentWrapper>
+            {routes.map((route: IRouteConfig, i: number) => (
+              <Route
+                key={i}
+                path={route.path}
+                exact={route.exact}
+                component={route.component}
+              />
+            ))}
+          </ContentWrapper>
+        </Box>
+      </Grid>
+    </Grommet>
+  </Router>
+);
 
 export default App;
