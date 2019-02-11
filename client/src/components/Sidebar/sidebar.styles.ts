@@ -13,6 +13,7 @@ export const SidebarLogo = styled.div`
 `;
 
 export const SidebarLink = styled(Link)`
+  color: #ffffff;
   display: inline-block;
   padding: 10px 0;
   text-decoration: none;
@@ -22,5 +23,9 @@ export const SidebarLink = styled(Link)`
     background-color: #9766f5;
     cursor: pointer;
     text-decoration: none;
+  }
+
+  &:active {
+    color: #7d4cdb;
   }
 `;

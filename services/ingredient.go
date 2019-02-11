@@ -54,3 +54,24 @@ func UpdateIngredient(i *models.Ingredient, id int) (models.Ingredient, error) {
 
 	return ingredient, nil
 }
+
+func BuildIngredientDTOList(ingredients []models.Ingredient) []models.IngredientDTO {
+	var ingredientDTOList []models.IngredientDTO
+	for _, v := range ingredients {
+		ingredientDTOList = append(ingredientDTOList, BuildIngredientDTO(v))
+	}
+
+	return ingredientDTOList
+}
+
+func BuildIngredientDTO(ingredient models.Ingredient) models.IngredientDTO {
+	ingredientDTO := models.IngredientDTO{
+		ID:        ingredient.ID,
+		CreatedAt: ingredient.CreatedAt,
+		UpdatedAt: ingredient.UpdatedAt,
+		DeletedAt: ingredient.DeletedAt,
+		Name:      ingredient.Name,
+		Recipes:   ingredient.Recipes}
+
+	return ingredientDTO
+}

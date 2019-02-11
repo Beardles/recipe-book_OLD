@@ -17,5 +17,5 @@ func main() {
 
 	defer db.Close()
 
-	log.Fatal(http.ListenAndServe(":5000", handlers.LoggingHandler(os.Stdout, routes.Router)))
+	log.Fatal(http.ListenAndServe(":5000", handlers.CORS()(handlers.LoggingHandler(os.Stdout, routes.Router))))
 }
