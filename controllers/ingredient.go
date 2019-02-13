@@ -37,7 +37,9 @@ func GetIngredient(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	json.NewEncoder(w).Encode(&ingredient)
+	ingredientDTO := services.BuildIngredientDTO(ingredient)
+
+	json.NewEncoder(w).Encode(&ingredientDTO)
 
 }
 

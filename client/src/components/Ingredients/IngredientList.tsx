@@ -30,7 +30,10 @@ const Ingredients: React.FC = observer(() => {
       store.ingredients = i;
     },
   });
-  const { data, isLoading, isError, error } = useGetData('ingredients', []);
+  const { data, isLoading, isError, error } = useGetData<IIngredient[]>(
+    'ingredients',
+    []
+  );
 
   if (isLoading) {
     return <div>Loading...</div>;

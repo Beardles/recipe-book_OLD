@@ -1,11 +1,19 @@
 import { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
+import { string } from 'prop-types';
 
-const useGetData = <T extends any>(
+function useGetData<T>(
   resource: string,
-  initialData: T
-): { data: T; isLoading: boolean; isError: boolean; error: string } => {
-  const [data, setData] = useState(initialData);
+  initialState: T | {}
+): { data: T; isLoading: boolean; isError: boolean; error: string };
+
+function useGetData<T>(
+  resource: string,
+  initialState: T
+): { data: T; isLoading: boolean; isError: boolean; error: string };
+
+function useGetData(resource: string, initialState: any): any {
+  const [data, setData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState('');
@@ -35,6 +43,6 @@ const useGetData = <T extends any>(
   }, []);
 
   return { data, isLoading, isError, error };
-};
+}
 
 export default useGetData;
