@@ -1,5 +1,5 @@
 import { Home } from './components/Home';
-import { Ingredients } from './components/Ingredients';
+import { IngredientList } from './components/Ingredients';
 import { Recipes } from './components/Recipes';
 
 export interface IRouteConfig {
@@ -20,6 +20,6 @@ export const routes: IRouteConfig[] = [
   },
   {
     path: '/ingredients',
-    component: Ingredients,
+    component: IngredientList,
   },
 ];

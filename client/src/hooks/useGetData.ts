@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
 
 const useGetData = <T extends any>(
-  url: string,
+  resource: string,
   initialData: T
 ): { data: T; isLoading: boolean; isError: boolean; error: string } => {
   const [data, setData] = useState(initialData);
@@ -10,7 +10,9 @@ const useGetData = <T extends any>(
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState('');
 
-  const fetchData = async (resource: string) => {
+  const fetchData: (resource: string) => Promise<void> = async (
+    resource: string
+  ): Promise<void> => {
     setIsLoading(true);
     setIsError(false);
     setError('');
@@ -21,7 +23,6 @@ const useGetData = <T extends any>(
       );
       setData(response.data);
     } catch (e) {
-      console.log(e);
       setIsError(true);
       setError(e.message);
     }
@@ -30,7 +31,7 @@ const useGetData = <T extends any>(
   };
 
   useEffect(() => {
-    fetchData(url);
+    fetchData(resource);
   }, []);
 
   return { data, isLoading, isError, error };

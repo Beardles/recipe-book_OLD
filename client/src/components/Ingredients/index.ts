@@ -1,1 +1,2 @@
-export { default as Ingredients } from './Ingredients';
+export { default as IngredientList } from './IngredientList';
+export { default as IngredientsTable } from './IngredientsTable';
