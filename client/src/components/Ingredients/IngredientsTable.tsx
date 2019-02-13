@@ -7,9 +7,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  Box,
 } from 'grommet';
-import { Link } from 'react-router-dom';
 import { Edit, Trash } from 'grommet-icons';
 import { IngredientTableActions, IngredientLink } from './ingredients.styles';
 
@@ -25,6 +23,9 @@ const IngredientsTable: React.FC<IProps> = ({ ingredients }) => (
           <Text>Name</Text>
         </TableCell>
         <TableCell size="small">
+          <Text>Notes</Text>
+        </TableCell>
+        <TableCell size="small">
           <Text alignSelf="end">Actions</Text>
         </TableCell>
       </TableRow>
@@ -37,6 +38,7 @@ const IngredientsTable: React.FC<IProps> = ({ ingredients }) => (
               {ingredient.name}
             </IngredientLink>
           </TableCell>
+          <TableCell>{ingredient.notes}</TableCell>
           <TableCell style={{ textAlign: 'right' }}>
             <IngredientTableActions>
               <Edit color="dark-2" onClick={() => alert('Edit')} />
