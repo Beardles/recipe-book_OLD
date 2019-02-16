@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Heading, Box, Button, Grommet } from 'grommet';
-import { useGetData, useGetIngredients } from '../../hooks';
-import { IIngredient } from '../../domain/Ingredient';
+import { useGetIngredients } from '../../hooks';
 import { IngredientsTable } from '.';
 import { IngredientHeader } from './ingredients.styles';
 import { Add } from 'grommet-icons';
