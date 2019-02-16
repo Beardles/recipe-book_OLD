@@ -33,12 +33,17 @@ const useGetIngredients = (
   };
 
   useEffect(() => {
-    if (!store.selectedIngredient) {
-      fetchData();
-    }
-
+    // If we are working with a single ingredient
     if (id) {
+      if (!store.selectedIngredient) {
+        fetchData();
+      }
       store.setSelectedIngredientId(id);
+    } else {
+      // If we are working with the list
+      if (store.ingredients.length === 0) {
+        fetchData();
+      }
     }
   }, []);
 
