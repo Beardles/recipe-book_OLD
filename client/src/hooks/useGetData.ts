@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios, { AxiosResponse } from 'axios';
-import { string } from 'prop-types';
 
 function useGetData<T>(
   resource: string,
