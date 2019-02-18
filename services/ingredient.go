@@ -25,22 +25,32 @@ func GetIngredient(id int) (models.Ingredient, error) {
 	return ingredient, nil
 }
 
-func CreateIngredient(i *models.Ingredient) error {
+func CreateIngredient(i *models.Ingredient) ([]models.Ingredient, error) {
 	if err := db.Connection.Create(i).Error; err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	var ingredients []models.Ingredient
+	if err := db.Connection.Find(&ingredients).Error; err != nil {
+		return nil, err
+	}
+
+	return ingredients, nil
 }
 
-func DeleteIngredient(id int) error {
+func DeleteIngredient(id int) ([]models.Ingredient, error) {
 	var ingredient models.Ingredient
 
 	if err := db.Connection.Delete(&ingredient, id).Error; err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	var ingredients []models.Ingredient
+	if err := db.Connection.Find(&ingredients).Error; err != nil {
+		return nil, err
+	}
+
+	return ingredients, nil
 }
 
 func UpdateIngredient(i *models.Ingredient, id int) (models.Ingredient, error) {
@@ -71,6 +81,7 @@ func BuildIngredientDTO(ingredient models.Ingredient) models.IngredientDTO {
 		UpdatedAt: ingredient.UpdatedAt,
 		DeletedAt: ingredient.DeletedAt,
 		Name:      ingredient.Name,
+		Notes:     ingredient.Notes,
 		Recipes:   ingredient.Recipes}
 
 	return ingredientDTO

@@ -14,7 +14,7 @@ const useGetIngredients = (
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState('');
 
-  const fetchData: () => Promise<void> = async (): Promise<void> => {
+  const fetchIngredients: () => Promise<void> = async (): Promise<void> => {
     setIsLoading(true);
     setIsError(false);
     setError('');
@@ -33,16 +33,17 @@ const useGetIngredients = (
   };
 
   useEffect(() => {
+    // TODO: This could be cleaner
     // If we are working with a single ingredient
     if (id) {
       if (!store.selectedIngredient) {
-        fetchData();
+        fetchIngredients();
       }
       store.setSelectedIngredientId(id);
     } else {
       // If we are working with the list
       if (store.ingredients.length === 0) {
-        fetchData();
+        fetchIngredients();
       }
     }
   }, []);

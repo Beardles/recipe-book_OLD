@@ -46,12 +46,17 @@ func GetIngredient(w http.ResponseWriter, r *http.Request) {
 func CreateIngredient(w http.ResponseWriter, r *http.Request) {
 	var ingredient models.Ingredient
 	json.NewDecoder(r.Body).Decode(&ingredient)
-	if err := services.CreateIngredient(&ingredient); err != nil {
+
+	ingredients, err := services.CreateIngredient(&ingredient)
+	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		panic(err)
 	}
 
-	w.Write([]byte(`{ "success": true }`))
+	ingredientDTOList := services.BuildIngredientDTOList(ingredients)
+
+	// w.Write([]byte(`{ "success": true }`))
+	json.NewEncoder(w).Encode(&ingredientDTOList)
 }
 
 func DeleteIngredient(w http.ResponseWriter, r *http.Request) {
@@ -63,12 +68,17 @@ func DeleteIngredient(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	if err := services.DeleteIngredient(id); err != nil {
+	ingredients, err := services.DeleteIngredient(id)
+
+	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		panic(err)
 	}
 
-	w.Write([]byte(`{ "success": true }`))
+	ingredientDTOList := services.BuildIngredientDTOList(ingredients)
+
+	// w.Write([]byte(`{ "success": true }`))
+	json.NewEncoder(w).Encode(&ingredientDTOList)
 }
 
 func UpdateIngredient(w http.ResponseWriter, r *http.Request) {

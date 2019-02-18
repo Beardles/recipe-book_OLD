@@ -11,7 +11,7 @@ interface IStore {
   setSelectedIngredientId(id: number): void;
 
   // Computed
-  selectedIngredient: IIngredient | undefined;
+  selectedIngredient: IIngredient | null;
 }
 
 const store: IStore = {
@@ -26,10 +26,12 @@ const store: IStore = {
     store.selectedIngredientId = id;
   },
 
-  get selectedIngredient(): IIngredient | undefined {
-    return store.ingredients.find(
+  get selectedIngredient(): IIngredient | null {
+    const selectedIngredient: IIngredient | undefined = store.ingredients.find(
       (i: IIngredient) => i.id === store.selectedIngredientId
     );
+
+    return selectedIngredient || null;
   },
 };
 

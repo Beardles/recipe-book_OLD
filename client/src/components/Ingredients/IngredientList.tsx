@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Heading, Box, Button, Grommet } from 'grommet';
 import { useGetIngredients } from '../../hooks';
-import { IngredientsTable } from '.';
+import { IngredientsTable, IngredientForm } from '.';
 import { IngredientHeader } from './ingredients.styles';
 import { Add } from 'grommet-icons';
 import StoreContext from '../../state';
+import { ingredientForm } from '../../form';
 
 const customTheme = {
   text: {
@@ -24,6 +25,7 @@ const customTheme = {
 
 const Ingredients: React.FC = observer(() => {
   const store = useContext(StoreContext);
+  const [showNewIngredientForm, setShowNewIngredientForm] = useState(false);
   const { isLoading, isError, error } = useGetIngredients();
 
   if (isLoading) {
@@ -38,18 +40,39 @@ const Ingredients: React.FC = observer(() => {
     <Grommet theme={customTheme}>
       <Box align="start" pad="large" style={{ position: 'relative' }}>
         <IngredientHeader>
-          <Heading level="3" margin="none">
-            Ingredients
-          </Heading>
-          <Button
-            style={{ margin: '5px 0' }}
-            primary
-            icon={<Add size="small" />}
-            label="Add"
-            onClick={() => alert('Add')}
-          />
+          {!showNewIngredientForm && (
+            <>
+              <Heading level="3" margin="none">
+                Ingredients
+              </Heading>
+              <Button
+                style={{ margin: '5px 0' }}
+                primary
+                icon={<Add size="small" />}
+                label="Add"
+                onClick={() => setShowNewIngredientForm(true)}
+              />
+            </>
+          )}
+          {showNewIngredientForm && (
+            <>
+              <Heading level="3" margin="none">
+                Add New Ingredient
+              </Heading>
+            </>
+          )}
         </IngredientHeader>
-        <IngredientsTable ingredients={store.ingredients} />
+        {!showNewIngredientForm && (
+          <IngredientsTable ingredients={store.ingredients} />
+        )}
+        {showNewIngredientForm && (
+          <Box direction="row" width="medium">
+            <IngredientForm
+              form={ingredientForm}
+              dismissForm={() => setShowNewIngredientForm(false)}
+            />
+          </Box>
+        )}
       </Box>
     </Grommet>
   );

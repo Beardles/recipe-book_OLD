@@ -17,5 +17,9 @@ func main() {
 
 	defer db.Close()
 
-	log.Fatal(http.ListenAndServe(":5000", handlers.CORS()(handlers.LoggingHandler(os.Stdout, routes.Router))))
+	headersOk := handlers.AllowedHeaders([]string{"X-Requested-With"})
+	originsOk := handlers.AllowedOrigins([]string{"*"})
+	methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
+
+	log.Fatal(http.ListenAndServe(":5000", handlers.CORS(headersOk, originsOk, methodsOk)(handlers.LoggingHandler(os.Stdout, routes.Router))))
 }
